@@ -103,11 +103,8 @@ class DocumentImportController extends ActionController
 
         $documentSet = $this->resolveOrCreateDocumentSet((int)($parsedBody['documentSet'] ?? 0), $backendUser);
 
-        // Nested under 'upload' deliberately: if 'files' were the sole top-level uploaded-file
-        // field, Extbase's RequestBuilder "unwraps" it (a legacy single-file-argument heuristic)
-        // and merges its integer-keyed contents directly into the top-level argument list,
-        // crashing ExtbaseRequestParameters::setArgument() (string $argumentName, int given).
-        // The extra nesting level absorbs that one unwrap harmlessly.
+        // Nested under 'upload' deliberately: groups all uploaded files under one key,
+        // independent of how Extbase normalizes/merges the raw PSR-7 uploaded-files array.
         $uploadedFilesParameter = $this->request->getUploadedFiles()['upload']['files'] ?? [];
         if (!is_array($uploadedFilesParameter) || $uploadedFilesParameter === []) {
             $this->addFlashMessage(

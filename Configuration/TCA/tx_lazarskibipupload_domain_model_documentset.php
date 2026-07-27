@@ -6,11 +6,9 @@ return [
         'label' => 'uid',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'hideTable' => true,
         'rootLevel' => -1,
-        'searchFields' => '',
     ],
     'types' => [
         '1' => ['showitem' => 'staging_token, status, expires_at, confirmed_page, cruser_id, suggested_type, type_confidence, suggested_page_title, suggested_subtitle, suggested_slug, analysis_payload, approved_type, approved_page_title, approved_subtitle, approved_slug, approved_parent_page, approved_fal_folder, suggested_auto_folder, include_auto_folder, approved_file_prefix'],
@@ -32,6 +30,7 @@ return [
                 'size' => 32,
                 'eval' => 'trim',
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'status' => [
@@ -55,6 +54,7 @@ return [
             'config' => [
                 'type' => 'datetime',
                 'default' => 0,
+                'searchable' => false,
             ],
         ],
         'confirmed_page' => [
@@ -73,6 +73,7 @@ return [
                 'size' => 20,
                 'eval' => 'trim',
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'type_confidence' => [
@@ -91,6 +92,7 @@ return [
                 'size' => 40,
                 'eval' => 'trim',
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'suggested_subtitle' => [
@@ -100,6 +102,7 @@ return [
                 'cols' => 40,
                 'rows' => 3,
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'suggested_slug' => [
@@ -109,6 +112,7 @@ return [
                 'size' => 40,
                 'eval' => 'trim',
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'analysis_payload' => [
@@ -118,6 +122,7 @@ return [
                 'cols' => 40,
                 'rows' => 8,
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'approved_type' => [
@@ -126,6 +131,7 @@ return [
                 'type' => 'input',
                 'size' => 20,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'approved_page_title' => [
@@ -134,6 +140,7 @@ return [
                 'type' => 'input',
                 'size' => 40,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'approved_subtitle' => [
@@ -142,6 +149,7 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 3,
+                'searchable' => false,
             ],
         ],
         'approved_slug' => [
@@ -150,6 +158,7 @@ return [
                 'type' => 'input',
                 'size' => 40,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'approved_parent_page' => [
@@ -166,6 +175,7 @@ return [
                 'type' => 'input',
                 'size' => 40,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'suggested_auto_folder' => [
@@ -175,6 +185,7 @@ return [
                 'size' => 20,
                 'eval' => 'trim',
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'include_auto_folder' => [
@@ -190,6 +201,7 @@ return [
                 'type' => 'input',
                 'size' => 40,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
     ],

@@ -9,7 +9,6 @@ return [
         'delete' => 'deleted',
         'hideTable' => true,
         'rootLevel' => -1,
-        'searchFields' => 'original_filename',
     ],
     'types' => [
         '1' => ['showitem' => 'document_set, original_filename, file_extension, mime_type, size, stored_path, converted_path, status, error_message, suggested_title, title_confidence, title_source, approved_title, approved_description, final_file'],
@@ -37,6 +36,7 @@ return [
                 'type' => 'input',
                 'size' => 10,
                 'eval' => 'trim,lower',
+                'searchable' => false,
             ],
         ],
         'mime_type' => [
@@ -45,6 +45,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'size' => [
@@ -62,6 +63,7 @@ return [
                 'size' => 40,
                 'eval' => 'trim',
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'converted_path' => [
@@ -71,6 +73,7 @@ return [
                 'size' => 40,
                 'eval' => 'trim',
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'status' => [
@@ -94,6 +97,7 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 4,
+                'searchable' => false,
             ],
         ],
         'suggested_title' => [
@@ -103,6 +107,7 @@ return [
                 'size' => 40,
                 'eval' => 'trim',
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'title_confidence' => [
@@ -121,6 +126,7 @@ return [
                 'size' => 20,
                 'eval' => 'trim',
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'approved_title' => [
@@ -129,6 +135,7 @@ return [
                 'type' => 'input',
                 'size' => 40,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'approved_description' => [
@@ -137,6 +144,7 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 3,
+                'searchable' => false,
             ],
         ],
         'final_file' => [
