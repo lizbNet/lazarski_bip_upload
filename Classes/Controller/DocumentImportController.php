@@ -87,7 +87,7 @@ class DocumentImportController extends ActionController
             'cancelFormToken' => $this->getFormProtection()->generateToken(self::FORM_NAME, 'cancel'),
         ]);
 
-        return $moduleTemplate->renderResponse('New');
+        return $moduleTemplate->renderResponse('DocumentImport/New');
     }
 
     public function createAction(): ResponseInterface
@@ -364,7 +364,7 @@ class DocumentImportController extends ActionController
             'isAiConfigured' => $this->documentAnalysisService->isAiConfigured(),
         ]);
 
-        return $moduleTemplate->renderResponse('Review');
+        return $moduleTemplate->renderResponse('DocumentImport/Review');
     }
 
     /**
