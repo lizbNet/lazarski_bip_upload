@@ -1,0 +1,35 @@
+# cat=basic/enable/010; type=int+; label=BIP root page UID: Confirmed sets may only be published beneath this page (its own page tree).
+bipRootPageUid = 7
+
+# cat=basic/enable/020; type=int+; label=Default parent page UID: Used when a set's type is unknown or has no mapping configured below.
+defaultParentPageUid = 7
+
+# cat=basic/enable/030; type=int+; label=Parent page UID for "uchwała" document sets (0 = use the default above)
+parentPageUidUchwala = 0
+
+# cat=basic/enable/040; type=int+; label=Parent page UID for "zarządzenie" document sets - Rektora, Prezydenta, and Prezydenta i Rektora all share this setting (0 = use the default above)
+parentPageUidZarzadzenie = 0
+
+# cat=basic/enable/050; type=int+; label=Parent page UID for "program studiów" document sets (0 = use the default above)
+parentPageUidProgramStudiow = 0
+
+# cat=basic/enable/060; type=string; label=OpenAI API key (optional): Used to clean up/generate the page title, subtitle, and per-file titles, catching cases (e.g. scanner-generated metadata) the automatic heuristic can't. Leave empty to use the heuristic only - this is never a hard requirement.
+openAiApiKey =
+
+# cat=basic/enable/070; type=string; label=OpenAI model (used only if the API key above is set)
+openAiModel = gpt-4o-mini
+
+# cat=basic/enable/080; type=int+; label=FAL storage UID: Confirmed PDFs are imported into this file storage (see Admin Tools > File Storages; 1 = the default fileadmin/ storage).
+falStorageUid = 1
+
+# cat=basic/enable/090; type=string; label=Default FAL folder identifier: Used when a set's type is unknown or has no folder mapping configured below. Created automatically if missing.
+falFolderIdentifier = /bip-dokumenty/
+
+# cat=basic/enable/100; type=string; label=FAL folder for "uchwała" document sets (empty = use the default above)
+falFolderIdentifierUchwala =
+
+# cat=basic/enable/110; type=string; label=FAL folder for "zarządzenie" document sets - Rektora, Prezydenta, and Prezydenta i Rektora all share this setting (empty = use the default above)
+falFolderIdentifierZarzadzenie =
+
+# cat=basic/enable/120; type=string; label=FAL folder for "program studiów" document sets (empty = use the default above)
+falFolderIdentifierProgramStudiow =

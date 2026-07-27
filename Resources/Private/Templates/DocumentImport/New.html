@@ -1,0 +1,86 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Backend" />
+<f:section name="Content">
+
+    <f:if condition="{openSets}">
+        <h2><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:openSets.heading" /></h2>
+        <div class="row">
+            <f:for each="{openSets}" as="documentSet">
+                <div class="col-md-6 mb-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            #{documentSet.uid}
+                            &mdash;
+                            <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:status.{documentSet.status}" />
+                        </div>
+                        <div class="panel-body">
+                            <f:if condition="{itemsBySet.{documentSet.uid}}">
+                                <f:then>
+                                    <ul class="list-unstyled">
+                                        <f:for each="{itemsBySet.{documentSet.uid}}" as="item">
+                                            <li>
+                                                {item.originalFilename}
+                                                (<f:format.bytes value="{item.size}" />,
+                                                <f:switch expression="{item.fileExtension}">
+                                                    <f:case value="pdf">PDF</f:case>
+                                                    <f:case value="docx">DOCX</f:case>
+                                                    <f:defaultCase>{item.mimeType}</f:defaultCase>
+                                                </f:switch>)
+                                            </li>
+                                        </f:for>
+                                    </ul>
+                                </f:then>
+                                <f:else>
+                                    <p><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:openSets.empty" /></p>
+                                </f:else>
+                            </f:if>
+
+                            <f:if condition="{documentSet.status} == 1">
+                                <p>
+                                    <f:link.action action="review" arguments="{documentSet: documentSet.uid}" class="btn btn-success">
+                                        <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:upload.goToReview" />
+                                    </f:link.action>
+                                </p>
+                            </f:if>
+
+                            <form method="post" action="{f:uri.action(action: 'create')}" enctype="multipart/form-data" class="mb-2">
+                                <input type="hidden" name="formToken" value="{formToken}" />
+                                <input type="hidden" name="documentSet" value="{documentSet.uid}" />
+                                <input type="file" name="upload[files][]" multiple="multiple" accept=".pdf,.docx" class="form-control mb-2" />
+                                <button type="submit" class="btn btn-primary">
+                                    <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:upload.addMore" />
+                                </button>
+                            </form>
+
+                            <form method="post" action="{f:uri.action(action: 'cancel')}">
+                                <input type="hidden" name="formToken" value="{cancelFormToken}" />
+                                <input type="hidden" name="documentSet" value="{documentSet.uid}" />
+                                <button type="submit" class="btn btn-link text-danger">
+                                    <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:upload.cancelSet" />
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </f:for>
+        </div>
+    </f:if>
+
+    <h2><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:newSet.heading" /></h2>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p class="text-muted"><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:upload.hint" /></p>
+            <form method="post" action="{f:uri.action(action: 'create')}" enctype="multipart/form-data">
+                <input type="hidden" name="formToken" value="{formToken}" />
+                <input type="hidden" name="documentSet" value="0" />
+                <input type="file" name="upload[files][]" multiple="multiple" accept=".pdf,.docx" class="form-control mb-2" />
+                <button type="submit" class="btn btn-primary">
+                    <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:upload.submit" />
+                </button>
+            </form>
+        </div>
+    </div>
+
+</f:section>
+</html>

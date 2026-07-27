@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="pl" datatype="plaintext" original="messages" date="2026-07-21" product-name="lazarski_bip_upload">
+		<body>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset" xml:space="preserve">
+				<source>Zestaw dokumentów BIP</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.staging_token" xml:space="preserve">
+				<source>Token przechowywania</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.status" xml:space="preserve">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.expires_at" xml:space="preserve">
+				<source>Wygasa</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.confirmed_page" xml:space="preserve">
+				<source>Utworzona strona</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.cruser_id" xml:space="preserve">
+				<source>Utworzone przez</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.suggested_type" xml:space="preserve">
+				<source>Sugerowany typ</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.type_confidence" xml:space="preserve">
+				<source>Pewność typu</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.suggested_page_title" xml:space="preserve">
+				<source>Sugerowany tytuł strony</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.suggested_subtitle" xml:space="preserve">
+				<source>Sugerowany podtytuł</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.suggested_slug" xml:space="preserve">
+				<source>Sugerowany slug</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.analysis_payload" xml:space="preserve">
+				<source>Dane analizy (JSON)</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.approved_type" xml:space="preserve">
+				<source>Zatwierdzony typ</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.approved_page_title" xml:space="preserve">
+				<source>Zatwierdzony tytuł strony</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.approved_subtitle" xml:space="preserve">
+				<source>Zatwierdzony podtytuł</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.approved_slug" xml:space="preserve">
+				<source>Zatwierdzony slug</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.approved_parent_page" xml:space="preserve">
+				<source>Zatwierdzona strona nadrzędna</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.approved_fal_folder" xml:space="preserve">
+				<source>Zatwierdzony folder plików (FAL)</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.suggested_auto_folder" xml:space="preserve">
+				<source>Sugerowany autogenerowany podfolder (numer+rok)</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.include_auto_folder" xml:space="preserve">
+				<source>Dołącz autogenerowany podfolder</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.approved_file_prefix" xml:space="preserve">
+				<source>Przedrostek nazw plików</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem" xml:space="preserve">
+				<source>Plik zestawu dokumentów BIP</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.document_set" xml:space="preserve">
+				<source>Zestaw dokumentów</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.original_filename" xml:space="preserve">
+				<source>Oryginalna nazwa pliku</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.file_extension" xml:space="preserve">
+				<source>Rozszerzenie</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.mime_type" xml:space="preserve">
+				<source>Typ MIME</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.size" xml:space="preserve">
+				<source>Rozmiar (B)</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.stored_path" xml:space="preserve">
+				<source>Ścieżka przechowywania</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.status" xml:space="preserve">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.error_message" xml:space="preserve">
+				<source>Komunikat błędu</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.converted_path" xml:space="preserve">
+				<source>Ścieżka pliku po konwersji</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.suggested_title" xml:space="preserve">
+				<source>Sugerowany tytuł</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.title_confidence" xml:space="preserve">
+				<source>Pewność tytułu</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.title_source" xml:space="preserve">
+				<source>Źródło tytułu</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.approved_title" xml:space="preserve">
+				<source>Zatwierdzony tytuł</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.approved_description" xml:space="preserve">
+				<source>Opis pliku</source>
+			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem.final_file" xml:space="preserve">
+				<source>Plik docelowy (FAL)</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

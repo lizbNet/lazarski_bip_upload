@@ -1,0 +1,255 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Backend" />
+<f:section name="DocHeader">
+
+    <div class="module-docheader t3js-module-docheader">
+        <div class="module-docheader-bar module-docheader-bar-buttons">
+            <div class="module-docheader-bar-column-left">
+                <div class="btn-group">
+                    <f:link.action
+                        action="new"
+                        class="btn btn-default"
+                        title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.backToList')}"
+                    >
+                        <core:icon identifier="actions-close" />
+                    </f:link.action>
+                </div>
+            </div>
+            <div class="module-docheader-bar-column-right">
+                <div class="btn-group me-2">
+                    <button type="submit" form="reviewForm" name="formToken" value="{formToken}" formmethod="post" formaction="{f:uri.action(action: 'review')}" class="btn btn-default" title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.save')}">
+                        <core:icon identifier="actions-document-save" />
+                        <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.save" />
+                    </button>
+                    <button type="submit" form="reviewForm" name="formToken" value="{confirmFormToken}" formmethod="post" formaction="{f:uri.action(action: 'confirm')}" class="btn btn-primary" title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:confirm.submit')}">
+                        <core:icon identifier="actions-document-save" />
+                        <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:confirm.submit" />
+                    </button>
+                </div>
+                <div class="btn-group">
+                    <form id="cancelSetForm" method="post" action="{f:uri.action(action: 'cancel')}">
+                        <input type="hidden" name="documentSet" value="{documentSet.uid}" />
+                        <input type="hidden" name="formToken" value="{cancelFormToken}" />
+                    </form>
+                    <button
+                        type="submit"
+                        form="cancelSetForm"
+                        class="btn btn-danger"
+                        title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.deleteSet')}"
+                        onclick="return confirm('{deleteSetConfirmMessage}');"
+                    >
+                        <core:icon identifier="actions-edit-delete" />
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</f:section>
+<f:section name="Content">
+
+    <h2>
+        <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.heading" />
+        #{documentSet.uid}
+    </h2>
+
+    <div class="mb-4">
+        <p class="text-muted mb-2">
+            <f:if condition="{isAiConfigured}">
+                <f:then><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.aiConfigured" /></f:then>
+                <f:else><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.aiNotConfigured" /></f:else>
+            </f:if>
+        </p>
+        <form method="post" action="{f:uri.action(action: 'regenerateSuggestions')}">
+            <input type="hidden" name="documentSet" value="{documentSet.uid}" />
+            <input type="hidden" name="formToken" value="{regenerateFormToken}" />
+            <button type="submit" class="btn btn-outline-secondary">
+                <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.regenerate" />
+            </button>
+        </form>
+    </div>
+
+    <form id="reviewForm" method="post" action="{f:uri.action(action: 'review')}">
+        <input type="hidden" name="documentSet" value="{documentSet.uid}" />
+
+        <div class="mb-3">
+            <label class="form-label"><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.type" /></label>
+            <select name="approvedType" class="form-select">
+                <option value="" {f:if(condition: effectiveType, then: '', else: 'selected')}>
+                    <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.type.unknown" />
+                </option>
+                <f:for each="{0: 'uchwala', 1: 'zarzadzenie_rektora', 2: 'zarzadzenie_prezydenta', 3: 'zarzadzenie_prezydenta_i_rektora', 4: 'program_studiow'}" as="typeOption">
+                    <option value="{typeOption}" {f:if(condition: '{effectiveType} == {typeOption}', then: 'selected')}>
+                        <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.type.{typeOption}" />
+                    </option>
+                </f:for>
+            </select>
+            <small class="text-muted">
+                <f:translate
+                    key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.confidenceHint"
+                    arguments="{0: 'analiza', 1: documentSet.typeConfidence}"
+                />
+            </small>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.pageTitle" /></label>
+            <input type="text" name="approvedPageTitle" value="{effectivePageTitle}" class="form-control" maxlength="1024" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.subtitle" /></label>
+            <textarea name="approvedSubtitle" class="form-control" rows="2">{effectiveSubtitle}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.slug" /></label>
+            <input type="text" name="approvedSlug" value="{effectiveSlug}" class="form-control" maxlength="2048" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.parentPage" /></label>
+            <div class="input-group">
+                <input type="number" id="approvedParentPage-input" name="approvedParentPage" value="{effectiveParentPage}" class="form-control" min="1" />
+                <button
+                    type="button"
+                    class="btn btn-default t3js-element-browser"
+                    data-target="{f:be.uri(route: 'wizard_element_browser')}"
+                    data-mode="db"
+                    data-trigger-for="approvedParentPage-input"
+                    title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.browsePage')}"
+                >
+                    <core:icon identifier="actions-insert-record" />
+                </button>
+            </div>
+            <f:if condition="{destinationBreadcrumb}">
+                <small class="text-muted d-block">
+                    <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.destinationPath" />
+                    {destinationBreadcrumb}
+                </small>
+            </f:if>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.falFolder" /></label>
+            <div class="input-group">
+                <input type="text" id="approvedFalFolder-input" name="approvedFalFolder" value="{effectiveFalFolder}" class="form-control" maxlength="512" />
+                <button
+                    type="button"
+                    class="btn btn-default t3js-element-browser"
+                    data-target="{f:be.uri(route: 'wizard_element_browser')}"
+                    data-mode="folder"
+                    data-trigger-for="approvedFalFolder-input"
+                    title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.browseFolder')}"
+                >
+                    <core:icon identifier="actions-insert-record" />
+                </button>
+            </div>
+            <small class="text-muted d-block">
+                <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.falFolderHint" />
+            </small>
+            <f:if condition="{documentSet.suggestedAutoFolder}">
+                <div class="form-check mt-2">
+                    <input
+                        type="checkbox"
+                        id="includeAutoFolder-input"
+                        name="includeAutoFolder"
+                        value="1"
+                        class="form-check-input"
+                        {f:if(condition: documentSet.includeAutoFolder, then: 'checked="checked"')}
+                    />
+                    <label class="form-check-label" for="includeAutoFolder-input">
+                        <f:translate
+                            key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.includeAutoFolder"
+                            arguments="{0: documentSet.suggestedAutoFolder}"
+                        />
+                    </label>
+                </div>
+                <small class="text-muted d-block">
+                    <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.finalFalFolderPreview" />
+                    {finalFalFolderPreview}
+                </small>
+            </f:if>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.filePrefix" /></label>
+            <input type="text" name="approvedFilePrefix" value="{effectiveFilePrefix}" class="form-control" maxlength="255" />
+            <small class="text-muted d-block">
+                <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.filePrefixHint" />
+            </small>
+        </div>
+
+        <h3><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.itemTitlesHeading" /></h3>
+        <f:for each="{items}" as="item">
+            <div class="panel panel-default mb-3">
+                <div class="panel-heading d-flex justify-content-between align-items-center">
+                    <div>
+                        <f:switch expression="{item.fileExtension}">
+                            <f:case value="pdf"><core:icon identifier="mimetypes-pdf" /></f:case>
+                            <f:case value="docx"><core:icon identifier="mimetypes-word" /></f:case>
+                        </f:switch>
+                        <a href="{f:uri.action(action: 'previewItem', arguments: {documentSet: documentSet.uid, item: item.uid})}" target="_blank" rel="noopener">
+                            {item.originalFilename}
+                        </a>
+                        &mdash;
+                        <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:itemStatus.{item.status}" />
+                        <f:if condition="{item.errorMessage}">
+                            <span class="text-danger">({item.errorMessage})</span>
+                        </f:if>
+                    </div>
+                    <div class="btn-group">
+                        <f:if condition="{isAiConfigured}">
+                            <button
+                                type="submit"
+                                formmethod="post"
+                                formaction="{f:uri.action(action: 'generateItem', arguments: {documentSet: documentSet.uid, item: item.uid, formToken: generateItemFormToken})}"
+                                class="btn btn-sm btn-outline-secondary"
+                                title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.generateItem')}"
+                            >
+                                <core:icon identifier="actions-lightbulb-on" />
+                            </button>
+                        </f:if>
+                        <button
+                            type="submit"
+                            formmethod="post"
+                            formaction="{f:uri.action(action: 'removeItem', arguments: {documentSet: documentSet.uid, item: item.uid, formToken: removeItemFormToken})}"
+                            class="btn btn-sm btn-outline-danger"
+                            onclick="return confirm('{removeItemConfirmMessage}');"
+                            title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.removeItem')}"
+                        >
+                            <core:icon identifier="actions-edit-delete" />
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <input
+                        type="text"
+                        name="itemTitles[{item.uid}]"
+                        value="{f:if(condition: item.approvedTitle, then: item.approvedTitle, else: item.suggestedTitle)}"
+                        class="form-control"
+                        maxlength="1024"
+                    />
+                    <small class="text-muted d-block mb-1">
+                        <f:translate
+                            key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.confidenceHint"
+                            arguments="{0: item.titleSource, 1: item.titleConfidence}"
+                        />
+                    </small>
+                    <label class="form-label small mb-1">
+                        <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.itemDescription" />
+                    </label>
+                    <textarea
+                        name="itemDescriptions[{item.uid}]"
+                        class="form-control"
+                        rows="2"
+                    >{item.approvedDescription}</textarea>
+                </div>
+            </div>
+        </f:for>
+    </form>
+
+</f:section>
+</html>

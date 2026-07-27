@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="pl" datatype="plaintext" original="messages" date="2026-07-21" product-name="lazarski_bip_upload">
+		<body>
+			<trans-unit id="openSets.heading" xml:space="preserve">
+				<source>Zestawy w toku</source>
+			</trans-unit>
+			<trans-unit id="openSets.empty" xml:space="preserve">
+				<source>Ten zestaw nie zawiera jeszcze żadnych plików.</source>
+			</trans-unit>
+			<trans-unit id="newSet.heading" xml:space="preserve">
+				<source>Rozpocznij nowy zestaw dokumentów</source>
+			</trans-unit>
+			<trans-unit id="upload.hint" xml:space="preserve">
+				<source>Dozwolone formaty: PDF, DOCX.</source>
+			</trans-unit>
+			<trans-unit id="upload.submit" xml:space="preserve">
+				<source>Prześlij pliki</source>
+			</trans-unit>
+			<trans-unit id="upload.addMore" xml:space="preserve">
+				<source>Dodaj kolejne pliki</source>
+			</trans-unit>
+			<trans-unit id="upload.cancelSet" xml:space="preserve">
+				<source>Anuluj zestaw</source>
+			</trans-unit>
+			<trans-unit id="upload.noFilesChosen" xml:space="preserve">
+				<source>Wybierz co najmniej jeden plik PDF lub DOCX do przesłania.</source>
+			</trans-unit>
+			<trans-unit id="upload.unnamedFile" xml:space="preserve">
+				<source>plik bez nazwy</source>
+			</trans-unit>
+			<trans-unit id="upload.rejected" xml:space="preserve">
+				<source>Plik odrzucony</source>
+			</trans-unit>
+			<trans-unit id="upload.stored" xml:space="preserve">
+				<source>Zapisano %d plik(ów).</source>
+			</trans-unit>
+			<trans-unit id="set.notFound" xml:space="preserve">
+				<source>Nie znaleziono zestawu dokumentów.</source>
+			</trans-unit>
+			<trans-unit id="set.cannotCancel" xml:space="preserve">
+				<source>Tego zestawu nie można już anulować.</source>
+			</trans-unit>
+			<trans-unit id="set.cancelled" xml:space="preserve">
+				<source>Zestaw dokumentów został anulowany.</source>
+			</trans-unit>
+			<trans-unit id="status.0" xml:space="preserve">
+				<source>Roboczy</source>
+			</trans-unit>
+			<trans-unit id="status.1" xml:space="preserve">
+				<source>Przygotowany</source>
+			</trans-unit>
+			<trans-unit id="status.2" xml:space="preserve">
+				<source>Zatwierdzony</source>
+			</trans-unit>
+			<trans-unit id="status.3" xml:space="preserve">
+				<source>Opublikowany</source>
+			</trans-unit>
+			<trans-unit id="status.4" xml:space="preserve">
+				<source>Anulowany</source>
+			</trans-unit>
+			<trans-unit id="status.5" xml:space="preserve">
+				<source>Wygasły</source>
+			</trans-unit>
+			<trans-unit id="upload.goToReview" xml:space="preserve">
+				<source>Przejdź do przeglądu</source>
+			</trans-unit>
+			<trans-unit id="itemStatus.0" xml:space="preserve">
+				<source>Przesłany</source>
+			</trans-unit>
+			<trans-unit id="itemStatus.1" xml:space="preserve">
+				<source>Przekonwertowany</source>
+			</trans-unit>
+			<trans-unit id="itemStatus.2" xml:space="preserve">
+				<source>Błąd</source>
+			</trans-unit>
+			<trans-unit id="itemStatus.3" xml:space="preserve">
+				<source>Gotowy</source>
+			</trans-unit>
+			<trans-unit id="itemStatus.4" xml:space="preserve">
+				<source>Opublikowany</source>
+			</trans-unit>
+			<trans-unit id="review.heading" xml:space="preserve">
+				<source>Przegląd zestawu dokumentów</source>
+			</trans-unit>
+			<trans-unit id="review.backToList" xml:space="preserve">
+				<source>Wróć do listy zestawów</source>
+			</trans-unit>
+			<trans-unit id="review.cannotEdit" xml:space="preserve">
+				<source>Tego zestawu nie można już edytować.</source>
+			</trans-unit>
+			<trans-unit id="review.saved" xml:space="preserve">
+				<source>Zapisano zmiany.</source>
+			</trans-unit>
+			<trans-unit id="review.removeItem" xml:space="preserve">
+				<source>Usuń plik</source>
+			</trans-unit>
+			<trans-unit id="review.removeItemConfirm" xml:space="preserve">
+				<source>Czy na pewno usunąć ten plik z zestawu? Tej operacji nie można cofnąć.</source>
+			</trans-unit>
+			<trans-unit id="review.deleteSet" xml:space="preserve">
+				<source>Usuń zestaw</source>
+			</trans-unit>
+			<trans-unit id="review.deleteSetConfirm" xml:space="preserve">
+				<source>Czy na pewno usunąć cały zestaw dokumentów? Tej operacji nie można cofnąć.</source>
+			</trans-unit>
+			<trans-unit id="review.itemRemoved" xml:space="preserve">
+				<source>Plik został usunięty z zestawu.</source>
+			</trans-unit>
+			<trans-unit id="review.itemNotFound" xml:space="preserve">
+				<source>Nie znaleziono pliku w tym zestawie.</source>
+			</trans-unit>
+			<trans-unit id="review.generateItem" xml:space="preserve">
+				<source>Generuj przez AI</source>
+			</trans-unit>
+			<trans-unit id="review.itemGenerated" xml:space="preserve">
+				<source>Wygenerowano tytuł i opis dla pliku przy pomocy AI.</source>
+			</trans-unit>
+			<trans-unit id="review.itemGenerationFailed" xml:space="preserve">
+				<source>Nie udało się wygenerować sugestii AI dla tego pliku.</source>
+			</trans-unit>
+			<trans-unit id="review.regenerate" xml:space="preserve">
+				<source>Wygeneruj ponownie sugestie (AI)</source>
+			</trans-unit>
+			<trans-unit id="review.regeneratedWithAi" xml:space="preserve">
+				<source>Wygenerowano nowe sugestie przy pomocy AI.</source>
+			</trans-unit>
+			<trans-unit id="review.regeneratedHeuristicOnly" xml:space="preserve">
+				<source>Wygenerowano nowe sugestie (klucz API OpenAI nie jest skonfigurowany - użyto reguł automatycznych).</source>
+			</trans-unit>
+			<trans-unit id="review.aiConfigured" xml:space="preserve">
+				<source>Generowanie przez AI jest włączone.</source>
+			</trans-unit>
+			<trans-unit id="review.aiNotConfigured" xml:space="preserve">
+				<source>Generowanie przez AI nie jest skonfigurowane (klucz API OpenAI). Ponowne generowanie użyje tylko reguł automatycznych.</source>
+			</trans-unit>
+			<trans-unit id="review.type" xml:space="preserve">
+				<source>Typ dokumentu</source>
+			</trans-unit>
+			<trans-unit id="review.type.unknown" xml:space="preserve">
+				<source>-- wybierz typ --</source>
+			</trans-unit>
+			<trans-unit id="review.type.uchwala" xml:space="preserve">
+				<source>Uchwała Senatu</source>
+			</trans-unit>
+			<trans-unit id="review.type.zarzadzenie_rektora" xml:space="preserve">
+				<source>Zarządzenie Rektora</source>
+			</trans-unit>
+			<trans-unit id="review.type.zarzadzenie_prezydenta" xml:space="preserve">
+				<source>Zarządzenie Prezydenta</source>
+			</trans-unit>
+			<trans-unit id="review.type.zarzadzenie_prezydenta_i_rektora" xml:space="preserve">
+				<source>Zarządzenie Prezydenta i Rektora</source>
+			</trans-unit>
+			<trans-unit id="review.type.program_studiow" xml:space="preserve">
+				<source>Program studiów</source>
+			</trans-unit>
+			<trans-unit id="review.pageTitle" xml:space="preserve">
+				<source>Tytuł strony</source>
+			</trans-unit>
+			<trans-unit id="review.subtitle" xml:space="preserve">
+				<source>Podtytuł</source>
+			</trans-unit>
+			<trans-unit id="review.slug" xml:space="preserve">
+				<source>Slug (adres URL)</source>
+			</trans-unit>
+			<trans-unit id="review.parentPage" xml:space="preserve">
+				<source>Strona nadrzędna (UID)</source>
+			</trans-unit>
+			<trans-unit id="review.destinationPath" xml:space="preserve">
+				<source>Ścieżka w drzewie stron:</source>
+			</trans-unit>
+			<trans-unit id="review.falFolder" xml:space="preserve">
+				<source>Folder w systemie plików (FAL)</source>
+			</trans-unit>
+			<trans-unit id="review.falFolderHint" xml:space="preserve">
+				<source>Folder, do którego zostaną zaimportowane pliki PDF po zatwierdzeniu. Zostanie utworzony automatycznie, jeśli nie istnieje.</source>
+			</trans-unit>
+			<trans-unit id="review.includeAutoFolder" xml:space="preserve">
+				<source>Dołącz autogenerowany podfolder na podstawie numeru i roku (%s)</source>
+			</trans-unit>
+			<trans-unit id="review.finalFalFolderPreview" xml:space="preserve">
+				<source>Ostateczna ścieżka po zatwierdzeniu:</source>
+			</trans-unit>
+			<trans-unit id="review.filePrefix" xml:space="preserve">
+				<source>Przedrostek nazw plików (opcjonalnie)</source>
+			</trans-unit>
+			<trans-unit id="review.filePrefixHint" xml:space="preserve">
+				<source>Dodawany na początku nazwy każdego pliku po zatwierdzeniu, np. "uchwala-31-2026_nazwa-pliku.pdf". Domyślnie slug strony z podkreśleniem na końcu. Pozostaw puste, aby nie dodawać przedrostka.</source>
+			</trans-unit>
+			<trans-unit id="review.browsePage" xml:space="preserve">
+				<source>Przeglądaj strony</source>
+			</trans-unit>
+			<trans-unit id="review.browseFolder" xml:space="preserve">
+				<source>Przeglądaj foldery</source>
+			</trans-unit>
+			<trans-unit id="review.itemTitlesHeading" xml:space="preserve">
+				<source>Tytuły plików</source>
+			</trans-unit>
+			<trans-unit id="review.itemDescription" xml:space="preserve">
+				<source>Opis pliku (opcjonalnie)</source>
+			</trans-unit>
+			<trans-unit id="review.confidenceHint" xml:space="preserve">
+				<source>Źródło: %s, pewność: %d%%</source>
+			</trans-unit>
+			<trans-unit id="review.save" xml:space="preserve">
+				<source>Zapisz zmiany</source>
+			</trans-unit>
+			<trans-unit id="confirm.submit" xml:space="preserve">
+				<source>Zatwierdź zestaw</source>
+			</trans-unit>
+			<trans-unit id="confirm.success" xml:space="preserve">
+				<source>Zestaw został zatwierdzony i opublikowany jako ukryta strona BIP.</source>
+			</trans-unit>
+			<trans-unit id="confirm.metadataFailed" xml:space="preserve">
+				<source>Nie udało się zapisać metadanych pliku</source>
+			</trans-unit>
+			<trans-unit id="confirm.publishFailed" xml:space="preserve">
+				<source>Nie udało się utworzyć strony</source>
+			</trans-unit>
+			<trans-unit id="confirm.alreadyPublished" xml:space="preserve">
+				<source>Ten zestaw został już opublikowany.</source>
+			</trans-unit>
+			<trans-unit id="confirm.error.set.notStaged" xml:space="preserve">
+				<source>Ten zestaw nie jest gotowy do zatwierdzenia (nieprawidłowy status).</source>
+			</trans-unit>
+			<trans-unit id="confirm.error.set.expired" xml:space="preserve">
+				<source>Ten zestaw wygasł i nie może zostać zatwierdzony.</source>
+			</trans-unit>
+			<trans-unit id="confirm.error.set.missingPageTitle" xml:space="preserve">
+				<source>Podaj tytuł strony.</source>
+			</trans-unit>
+			<trans-unit id="confirm.error.set.missingSlug" xml:space="preserve">
+				<source>Podaj adres URL (slug).</source>
+			</trans-unit>
+			<trans-unit id="confirm.error.set.slugCollision" xml:space="preserve">
+				<source>Wybrany adres URL (slug) jest już zajęty na tej stronie nadrzędnej.</source>
+			</trans-unit>
+			<trans-unit id="confirm.error.set.invalidDestination" xml:space="preserve">
+				<source>Wybrana strona nadrzędna jest nieprawidłowa lub znajduje się poza dozwolonym drzewem BIP.</source>
+			</trans-unit>
+			<trans-unit id="confirm.error.set.noItems" xml:space="preserve">
+				<source>Zestaw nie zawiera żadnych plików.</source>
+			</trans-unit>
+			<trans-unit id="confirm.error.item.notConverted" xml:space="preserve">
+				<source>Co najmniej jeden plik nie został poprawnie przekonwertowany.</source>
+			</trans-unit>
+			<trans-unit id="confirm.error.item.missingTitle" xml:space="preserve">
+				<source>Podaj tytuł dla każdego pliku.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

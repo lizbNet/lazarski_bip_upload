@@ -1,0 +1,26 @@
+{
+    "name": "prime-services/lazarski-bip-upload",
+    "description": "Backend module for staging and importing sets of Polish institutional documents into hidden BIP pages",
+    "type": "typo3-cms-extension",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": ">=8.1",
+        "typo3/cms-core": "^12.4",
+        "typo3/cms-backend": "^12.4",
+        "typo3/cms-extbase": "^12.4",
+        "typo3/cms-fluid": "^12.4",
+        "symfony/process": "^6.4",
+        "smalot/pdfparser": "^2.0",
+        "phpoffice/phpword": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PrimeServices\\LazarskiBipUpload\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "lazarski_bip_upload"
+        }
+    }
+}

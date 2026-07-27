@@ -1,0 +1,39 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  PrimeServices\LazarskiBipUpload\:
+    resource: '../Classes/*'
+    exclude: '../Classes/Domain/Model/*'
+
+  PrimeServices\LazarskiBipUpload\Controller\DocumentImportController:
+    public: true
+
+  PrimeServices\LazarskiBipUpload\Service\TemporaryUploadService:
+    public: true
+
+  PrimeServices\LazarskiBipUpload\Command\CleanupExpiredDocumentSetsCommand:
+    tags:
+      - name: 'console.command'
+        command: 'lazarskibipupload:cleanupexpiredsets'
+        description: 'Expire abandoned document upload sets and remove their staged files.'
+
+  PrimeServices\LazarskiBipUpload\Conversion\ProcessRunnerInterface:
+    alias: 'PrimeServices\LazarskiBipUpload\Conversion\SymfonyProcessRunner'
+
+  PrimeServices\LazarskiBipUpload\Conversion\DocumentConverterInterface:
+    alias: 'PrimeServices\LazarskiBipUpload\Conversion\LibreOfficeDocumentConverter'
+
+  PrimeServices\LazarskiBipUpload\Analysis\OpenAiClientInterface:
+    alias: 'PrimeServices\LazarskiBipUpload\Analysis\OpenAiHttpClient'
+
+  PrimeServices\LazarskiBipUpload\Analysis\PdfPageRasterizerInterface:
+    alias: 'PrimeServices\LazarskiBipUpload\Analysis\ImageMagickPdfPageRasterizer'
+
+  PrimeServices\LazarskiBipUpload\Service\FalImporterInterface:
+    alias: 'PrimeServices\LazarskiBipUpload\Service\TypoFalImporter'
+
+  PrimeServices\LazarskiBipUpload\Service\PageCreatorInterface:
+    alias: 'PrimeServices\LazarskiBipUpload\Service\DataHandlerPageCreator'
