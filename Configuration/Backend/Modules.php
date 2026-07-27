@@ -4,7 +4,7 @@ return [
     'web_lazarskibipupload' => [
         'parent' => 'web',
         'position' => [],
-        'access' => 'user,group',
+        'access' => 'user',
         'icon' => 'EXT:lazarski_bip_upload/Resources/Public/Icons/Extension.svg',
         'path' => '/module/web/lazarski-bip-upload',
         'labels' => [
