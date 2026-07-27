@@ -4,7 +4,14 @@ declare(strict_types=1);
 
 use PrimeServices\LazarskiBipUpload\Analysis\PdfMetadataReader;
 
-require_once dirname(__DIR__, 6) . '/vendor/autoload.php';
+$vendorAutoload = null;
+for ($dir = __DIR__; $dir !== ($parent = dirname($dir)); $dir = $parent) {
+    if (is_file($dir . '/vendor/autoload.php')) {
+        $vendorAutoload = $dir . '/vendor/autoload.php';
+        break;
+    }
+}
+require_once $vendorAutoload;
 
 $assertions = 0;
 

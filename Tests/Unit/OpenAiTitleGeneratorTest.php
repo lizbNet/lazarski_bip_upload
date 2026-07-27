@@ -6,7 +6,14 @@ use PrimeServices\LazarskiBipUpload\Analysis\OpenAiClientInterface;
 use PrimeServices\LazarskiBipUpload\Analysis\OpenAiTitleGenerator;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
-require_once dirname(__DIR__, 5) . '/vendor/autoload.php';
+$vendorAutoload = null;
+for ($dir = __DIR__; $dir !== ($parent = dirname($dir)); $dir = $parent) {
+    if (is_file($dir . '/vendor/autoload.php')) {
+        $vendorAutoload = $dir . '/vendor/autoload.php';
+        break;
+    }
+}
+require_once $vendorAutoload;
 
 /**
  * Test double for the real HTTP call: each scenario controls what the "model" replies with,

@@ -11,7 +11,14 @@ use PrimeServices\LazarskiBipUpload\Domain\Repository\DocumentItemRepository;
 use PrimeServices\LazarskiBipUpload\Service\DocumentConversionOrchestrator;
 use PrimeServices\LazarskiBipUpload\Service\TemporaryUploadService;
 
-require_once dirname(__DIR__, 5) . '/vendor/autoload.php';
+$vendorAutoload = null;
+for ($dir = __DIR__; $dir !== ($parent = dirname($dir)); $dir = $parent) {
+    if (is_file($dir . '/vendor/autoload.php')) {
+        $vendorAutoload = $dir . '/vendor/autoload.php';
+        break;
+    }
+}
+require_once $vendorAutoload;
 
 /**
  * Records update() calls instead of touching real persistence, so the orchestrator can be

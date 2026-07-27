@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrimeServices\LazarskiBipUpload\Service;
 
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -54,9 +55,21 @@ class DataHandlerPageCreator implements PageCreatorInterface
             $datamap['sys_file_reference'] = $refRows;
         }
 
+        // DataHandler reads admin status from its attached BE_USER (there is no settable
+        // $admin property), so elevation is passed in as an impersonated, request-local user
+        // object rather than mutating $GLOBALS['BE_USER'] - matching the precedent in
+        // scripts/migration/post-import-fixups.php, scoped to this single call. The uid is
+        // carried over from the real logged-in editor (not a synthetic 0): DataHandler's own
+        // hasPageContextPermission() rejects any user whose getUserId() is falsy *before* it
+        // even checks isAdmin(), so a uid-0 impersonation is silently denied regardless of the
+        // admin flag. Reusing the real uid also keeps cruser_id/log entries attributable.
+        $realUserId = (int)($GLOBALS['BE_USER']->user['uid'] ?? 0);
+        $elevatedBackendUser = GeneralUtility::makeInstance(BackendUserAuthentication::class);
+        $elevatedBackendUser->user = ['uid' => $realUserId, 'admin' => 1];
+        $elevatedBackendUser->workspace = 0;
+
         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
-        $dataHandler->admin = true;
-        $dataHandler->start($datamap, []);
+        $dataHandler->start($datamap, [], $elevatedBackendUser);
         $dataHandler->process_datamap();
 
         if (!empty($dataHandler->errorLog)) {

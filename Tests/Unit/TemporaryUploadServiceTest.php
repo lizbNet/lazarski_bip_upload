@@ -7,7 +7,14 @@ use PrimeServices\LazarskiBipUpload\Service\TemporaryUploadService;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
-require_once dirname(__DIR__, 5) . '/vendor/autoload.php';
+$vendorAutoload = null;
+for ($dir = __DIR__; $dir !== ($parent = dirname($dir)); $dir = $parent) {
+    if (is_file($dir . '/vendor/autoload.php')) {
+        $vendorAutoload = $dir . '/vendor/autoload.php';
+        break;
+    }
+}
+require_once $vendorAutoload;
 
 // Avoid undefined-array-key warnings inside TYPO3\CMS\Core\Type\File\FileInfo::getMimeType()
 // when running outside a full TYPO3 bootstrap.
