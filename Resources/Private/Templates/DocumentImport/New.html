@@ -25,6 +25,7 @@
                                                 <f:switch expression="{item.fileExtension}">
                                                     <f:case value="pdf">PDF</f:case>
                                                     <f:case value="docx">DOCX</f:case>
+                                                    <f:case value="xlsx">XLSX</f:case>
                                                     <f:defaultCase>{item.mimeType}</f:defaultCase>
                                                 </f:switch>)
                                             </li>
@@ -38,7 +39,7 @@
 
                             <f:if condition="{documentSet.status} == 1">
                                 <p>
-                                    <f:link.action action="review" arguments="{documentSet: documentSet.uid}" class="btn btn-success">
+                                    <f:link.action action="review" arguments="{documentSet: documentSet.uid}" class="btn btn-default">
                                         <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:upload.goToReview" />
                                     </f:link.action>
                                 </p>
@@ -47,7 +48,7 @@
                             <form method="post" action="{f:uri.action(action: 'create')}" enctype="multipart/form-data" class="mb-2">
                                 <input type="hidden" name="formToken" value="{formToken}" />
                                 <input type="hidden" name="documentSet" value="{documentSet.uid}" />
-                                <input type="file" name="upload[files][]" multiple="multiple" accept=".pdf,.docx" class="form-control mb-2" />
+                                <input type="file" name="upload[files][]" multiple="multiple" accept=".pdf,.docx,.xlsx" class="form-control mb-2" />
                                 <button type="submit" class="btn btn-primary">
                                     <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:upload.addMore" />
                                 </button>
@@ -74,7 +75,7 @@
             <form method="post" action="{f:uri.action(action: 'create')}" enctype="multipart/form-data">
                 <input type="hidden" name="formToken" value="{formToken}" />
                 <input type="hidden" name="documentSet" value="0" />
-                <input type="file" name="upload[files][]" multiple="multiple" accept=".pdf,.docx" class="form-control mb-2" />
+                <input type="file" name="upload[files][]" multiple="multiple" accept=".pdf,.docx,.xlsx" class="form-control mb-2" />
                 <button type="submit" class="btn btn-primary">
                     <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:upload.submit" />
                 </button>

@@ -65,7 +65,7 @@
         <form method="post" action="{f:uri.action(action: 'regenerateSuggestions')}">
             <input type="hidden" name="documentSet" value="{documentSet.uid}" />
             <input type="hidden" name="formToken" value="{regenerateFormToken}" />
-            <button type="submit" class="btn btn-outline-secondary">
+            <button type="submit" class="btn btn-default">
                 <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.regenerate" />
             </button>
         </form>
@@ -190,6 +190,7 @@
                         <f:switch expression="{item.fileExtension}">
                             <f:case value="pdf"><core:icon identifier="mimetypes-pdf" /></f:case>
                             <f:case value="docx"><core:icon identifier="mimetypes-word" /></f:case>
+                            <f:case value="xlsx"><core:icon identifier="mimetypes-excel" /></f:case>
                         </f:switch>
                         <a href="{f:uri.action(action: 'previewItem', arguments: {documentSet: documentSet.uid, item: item.uid})}" target="_blank" rel="noopener">
                             {item.originalFilename}
@@ -206,7 +207,7 @@
                                 type="submit"
                                 formmethod="post"
                                 formaction="{f:uri.action(action: 'generateItem', arguments: {documentSet: documentSet.uid, item: item.uid, formToken: generateItemFormToken})}"
-                                class="btn btn-sm btn-outline-secondary"
+                                class="btn btn-sm btn-default"
                                 title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.generateItem')}"
                             >
                                 <core:icon identifier="actions-lightbulb-on" />

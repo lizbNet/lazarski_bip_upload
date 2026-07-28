@@ -24,6 +24,10 @@ class TemporaryUploadService
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'application/zip',
         ],
+        'xlsx' => [
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/zip',
+        ],
     ];
 
     private const MAX_FILE_SIZE = 50 * 1024 * 1024;
@@ -76,7 +80,7 @@ class TemporaryUploadService
         $extension = strtolower(pathinfo($originalFilename, PATHINFO_EXTENSION));
         if (!isset(self::ALLOWED_MIME_TYPES[$extension])) {
             throw new UploadValidationException(
-                sprintf('File type ".%s" is not allowed. Only PDF and DOCX files are accepted.', $extension ?: '?')
+                sprintf('File type ".%s" is not allowed. Only PDF, DOCX, and XLSX files are accepted.', $extension ?: '?')
             );
         }
 
