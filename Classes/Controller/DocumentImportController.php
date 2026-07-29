@@ -394,6 +394,7 @@ class DocumentImportController extends ActionController
         $closeButton = $this->componentFactory->createGenericButton()
             ->setTag('a')
             ->setHref((string)$this->uriBuilder->reset()->uriFor('new'))
+            ->setLabel($this->translate('review.backToList'))
             ->setTitle($this->translate('review.backToList'))
             ->setIcon($this->iconFactory->getIcon('actions-close', IconSize::SMALL));
         $buttonBar->addButton($closeButton, ButtonBar::BUTTON_POSITION_LEFT);
@@ -429,6 +430,7 @@ class DocumentImportController extends ActionController
         $buttonBar->addButton($confirmButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
 
         $deleteButton = $this->componentFactory->createGenericButton()
+            ->setLabel($this->translate('review.deleteSet'))
             ->setTitle($this->translate('review.deleteSet'))
             ->setIcon($this->iconFactory->getIcon('actions-edit-delete', IconSize::SMALL))
             ->setAttributes([
