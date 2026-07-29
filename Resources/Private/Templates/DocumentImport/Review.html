@@ -1,54 +1,13 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
       data-namespace-typo3-fluid="true">
-<f:layout name="Backend" />
-<f:section name="DocHeader">
-
-    <div class="module-docheader t3js-module-docheader">
-        <div class="module-docheader-bar module-docheader-bar-buttons">
-            <div class="module-docheader-bar-column-left">
-                <div class="btn-group">
-                    <f:link.action
-                        action="new"
-                        class="btn btn-default"
-                        title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.backToList')}"
-                    >
-                        <core:icon identifier="actions-close" />
-                    </f:link.action>
-                </div>
-            </div>
-            <div class="module-docheader-bar-column-right">
-                <div class="btn-group me-2">
-                    <button type="submit" form="reviewForm" name="formToken" value="{formToken}" formmethod="post" formaction="{f:uri.action(action: 'review')}" class="btn btn-default" title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.save')}">
-                        <core:icon identifier="actions-document-save" />
-                        <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.save" />
-                    </button>
-                    <button type="submit" form="reviewForm" name="formToken" value="{confirmFormToken}" formmethod="post" formaction="{f:uri.action(action: 'confirm')}" class="btn btn-primary" title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:confirm.submit')}">
-                        <core:icon identifier="actions-document-save" />
-                        <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:confirm.submit" />
-                    </button>
-                </div>
-                <div class="btn-group">
-                    <form id="cancelSetForm" method="post" action="{f:uri.action(action: 'cancel')}">
-                        <input type="hidden" name="documentSet" value="{documentSet.uid}" />
-                        <input type="hidden" name="formToken" value="{cancelFormToken}" />
-                    </form>
-                    <button
-                        type="submit"
-                        form="cancelSetForm"
-                        class="btn btn-danger"
-                        title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.deleteSet')}"
-                        onclick="return confirm('{deleteSetConfirmMessage}');"
-                    >
-                        <core:icon identifier="actions-edit-delete" />
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</f:section>
+<f:layout name="Module" />
 <f:section name="Content">
+
+    <form id="cancelSetForm" method="post" action="{f:uri.action(action: 'cancel')}">
+        <input type="hidden" name="documentSet" value="{documentSet.uid}" />
+        <input type="hidden" name="formToken" value="{cancelFormToken}" />
+    </form>
 
     <h2>
         <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.heading" />
@@ -66,6 +25,7 @@
             <input type="hidden" name="documentSet" value="{documentSet.uid}" />
             <input type="hidden" name="formToken" value="{regenerateFormToken}" />
             <button type="submit" class="btn btn-default">
+                <core:icon identifier="actions-bolt" />
                 <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.regenerate" />
             </button>
         </form>
@@ -210,14 +170,14 @@
                                 class="btn btn-sm btn-default"
                                 title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.generateItem')}"
                             >
-                                <core:icon identifier="actions-lightbulb-on" />
+                                <core:icon identifier="actions-bolt" />
                             </button>
                         </f:if>
                         <button
                             type="submit"
                             formmethod="post"
                             formaction="{f:uri.action(action: 'removeItem', arguments: {documentSet: documentSet.uid, item: item.uid, formToken: removeItemFormToken})}"
-                            class="btn btn-sm btn-outline-danger"
+                            class="btn btn-sm btn-default"
                             onclick="return confirm('{removeItemConfirmMessage}');"
                             title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.removeItem')}"
                         >

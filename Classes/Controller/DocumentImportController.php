@@ -27,12 +27,17 @@ use PrimeServices\LazarskiBipUpload\Service\PublishException;
 use PrimeServices\LazarskiBipUpload\Service\TemporaryUploadService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Attribute\AsController;
+use TYPO3\CMS\Backend\Template\Components\ButtonBar;
+use TYPO3\CMS\Backend\Template\Components\ComponentFactory;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\FormProtection\BackendFormProtection;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Core\Http\Stream;
+use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
@@ -62,6 +67,8 @@ class DocumentImportController extends ActionController
         protected readonly ModuleTemplateFactory $moduleTemplateFactory,
         protected readonly FormProtectionFactory $formProtectionFactory,
         protected readonly PageRenderer $pageRenderer,
+        protected readonly ComponentFactory $componentFactory,
+        protected readonly IconFactory $iconFactory,
     ) {
     }
 
@@ -336,6 +343,11 @@ class DocumentImportController extends ActionController
         // module is needed (this is a plain Fluid form, not a FormEngine record-edit screen).
         $this->pageRenderer->loadJavaScriptModule('@typo3/lazarski-bip-upload/element-browser-fields.js');
 
+        $formToken = $this->getFormProtection()->generateToken(self::FORM_NAME, 'review');
+        $confirmFormToken = $this->getFormProtection()->generateToken(self::FORM_NAME, 'confirm');
+        $cancelFormToken = $this->getFormProtection()->generateToken(self::FORM_NAME, 'cancel');
+        $deleteSetConfirmMessage = $this->translate('review.deleteSetConfirm');
+
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->setTitle($this->getLanguageService()->sL(
             'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang_mod.xlf:mlang_tabs_tab'
@@ -353,18 +365,78 @@ class DocumentImportController extends ActionController
             'finalFalFolderPreview' => $finalFalFolderPreview,
             'effectiveFilePrefix' => $effectiveFilePrefix,
             'destinationBreadcrumb' => $this->pageBreadcrumbResolver->resolve($effectiveParentPage),
-            'formToken' => $this->getFormProtection()->generateToken(self::FORM_NAME, 'review'),
-            'confirmFormToken' => $this->getFormProtection()->generateToken(self::FORM_NAME, 'confirm'),
             'regenerateFormToken' => $this->getFormProtection()->generateToken(self::FORM_NAME, 'regenerateSuggestions'),
             'removeItemFormToken' => $this->getFormProtection()->generateToken(self::FORM_NAME, 'removeItem'),
             'removeItemConfirmMessage' => $this->translate('review.removeItemConfirm'),
-            'deleteSetConfirmMessage' => $this->translate('review.deleteSetConfirm'),
             'generateItemFormToken' => $this->getFormProtection()->generateToken(self::FORM_NAME, 'generateItem'),
-            'cancelFormToken' => $this->getFormProtection()->generateToken(self::FORM_NAME, 'cancel'),
+            'cancelFormToken' => $cancelFormToken,
             'isAiConfigured' => $this->documentAnalysisService->isAiConfigured(),
         ]);
 
+        $this->registerReviewDocHeaderButtons($moduleTemplate, $formToken, $confirmFormToken, $deleteSetConfirmMessage);
+
         return $moduleTemplate->renderResponse('DocumentImport/Review');
+    }
+
+    /**
+     * Builds the Review screen's doc header: back-to-list, save, confirm, and delete-set
+     * buttons. Save/confirm submit the external "reviewForm" (defined in the template body)
+     * via the HTML5 form="" attribute; delete submits the hidden "cancelSetForm".
+     */
+    private function registerReviewDocHeaderButtons(
+        ModuleTemplate $moduleTemplate,
+        string $formToken,
+        string $confirmFormToken,
+        string $deleteSetConfirmMessage
+    ): void {
+        $buttonBar = $moduleTemplate->getDocHeaderComponent()->getButtonBar();
+
+        $closeButton = $this->componentFactory->createGenericButton()
+            ->setTag('a')
+            ->setHref((string)$this->uriBuilder->reset()->uriFor('new'))
+            ->setTitle($this->translate('review.backToList'))
+            ->setIcon($this->iconFactory->getIcon('actions-close', IconSize::SMALL));
+        $buttonBar->addButton($closeButton, ButtonBar::BUTTON_POSITION_LEFT);
+
+        $saveButton = $this->componentFactory->createGenericButton()
+            ->setLabel($this->translate('review.save'))
+            ->setShowLabelText(true)
+            ->setTitle($this->translate('review.save'))
+            ->setIcon($this->iconFactory->getIcon('actions-document-save', IconSize::SMALL))
+            ->setAttributes([
+                'type' => 'submit',
+                'form' => 'reviewForm',
+                'name' => 'formToken',
+                'value' => $formToken,
+                'formmethod' => 'post',
+                'formaction' => (string)$this->uriBuilder->reset()->uriFor('review'),
+            ]);
+        $buttonBar->addButton($saveButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
+
+        $confirmButton = $this->componentFactory->createGenericButton()
+            ->setLabel($this->translate('confirm.submit'))
+            ->setShowLabelText(true)
+            ->setTitle($this->translate('confirm.submit'))
+            ->setIcon($this->iconFactory->getIcon('actions-document-save', IconSize::SMALL))
+            ->setAttributes([
+                'type' => 'submit',
+                'form' => 'reviewForm',
+                'name' => 'formToken',
+                'value' => $confirmFormToken,
+                'formmethod' => 'post',
+                'formaction' => (string)$this->uriBuilder->reset()->uriFor('confirm'),
+            ]);
+        $buttonBar->addButton($confirmButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
+
+        $deleteButton = $this->componentFactory->createGenericButton()
+            ->setTitle($this->translate('review.deleteSet'))
+            ->setIcon($this->iconFactory->getIcon('actions-edit-delete', IconSize::SMALL))
+            ->setAttributes([
+                'type' => 'submit',
+                'form' => 'cancelSetForm',
+                'onclick' => 'return confirm(' . json_encode($deleteSetConfirmMessage) . ');',
+            ]);
+        $buttonBar->addButton($deleteButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
     }
 
     /**
