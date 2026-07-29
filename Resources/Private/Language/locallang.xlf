@@ -92,6 +92,9 @@
 			<trans-unit id="review.saved" xml:space="preserve">
 				<source>Zapisano zmiany.</source>
 			</trans-unit>
+			<trans-unit id="review.previewItem" xml:space="preserve">
+				<source>Podgląd pliku</source>
+			</trans-unit>
 			<trans-unit id="review.removeItem" xml:space="preserve">
 				<source>Usuń plik</source>
 			</trans-unit>

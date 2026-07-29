@@ -152,9 +152,7 @@
                             <f:case value="docx"><core:icon identifier="mimetypes-word" /></f:case>
                             <f:case value="xlsx"><core:icon identifier="mimetypes-excel" /></f:case>
                         </f:switch>
-                        <a href="{f:uri.action(action: 'previewItem', arguments: {documentSet: documentSet.uid, item: item.uid})}" target="_blank" rel="noopener">
-                            {item.originalFilename}
-                        </a>
+                        {item.originalFilename}
                         &mdash;
                         <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:itemStatus.{item.status}" />
                         <f:if condition="{item.errorMessage}">
@@ -162,6 +160,15 @@
                         </f:if>
                     </div>
                     <div class="btn-group">
+                        <a
+                            href="{f:uri.action(action: 'previewItem', arguments: {documentSet: documentSet.uid, item: item.uid})}"
+                            target="_blank"
+                            rel="noopener"
+                            class="btn btn-sm btn-default"
+                            title="{f:translate(key: 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.previewItem')}"
+                        >
+                            <core:icon identifier="actions-open" />
+                        </a>
                         <f:if condition="{isAiConfigured}">
                             <button
                                 type="submit"
