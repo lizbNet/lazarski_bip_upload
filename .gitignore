@@ -1,2 +1,12 @@
+# Rozszerzenie jest biblioteką (typo3-cms-extension) — composer.lock NIE jest commitowany,
+# żeby nie narzucać wersji zależności projektom, które je instalują.
+/vendor/
+/composer.lock
+/.php-cs-fixer.cache
 .DS_Store
+.idea
 .claude/
+# Artefakty typo3/cms-composer-installers, powstaja gdy composer update
+# uruchomi sie w katalogu rozszerzenia (np. lokalne odtworzenie CI).
+/public/
+/var/
