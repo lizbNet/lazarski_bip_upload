@@ -1,0 +1,65 @@
+name: CI
+
+# To JEDYNE miejsce, w którym realnie wykonują się testy tego projektu.
+# Główny pipeline BIP na self-hosted GitLabie ma pusty stage `test`, bo cały kod
+# testowany mieszka tutaj (77 plików PHP, 20 skryptów testowych).
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          # Rozszerzenia z composer.json tego pakietu i jego zależności
+          # (phpoffice/phpword + phpspreadsheet wnoszą gd/zip/xml/xmlwriter, smalot/pdfparser zlib).
+          # ImageMagick ani LibreOffice NIE są potrzebne: testy wstrzykują test double'y
+          # (FakeProcessRunner, FakeDocumentConverter) zamiast wołać realne binarki.
+          extensions: intl, zip, gd, exif, mbstring, dom, xml, xmlwriter, zlib, sodium
+          coverage: none
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      # Rozszerzenie jest biblioteką — composer.lock nie jest commitowany, więc `update`,
+      # nie `install`. Przy okazji weryfikuje, że zawężenie do TYPO3 ^14.3.3 faktycznie
+      # się rozwiązuje razem z php ^8.2.
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-progress --no-interaction
+
+      - name: Lint PHP syntax
+        run: |
+          status=0
+          while IFS= read -r f; do
+            php -l "$f" > /dev/null || { echo "BLAD SKLADNI: $f"; status=1; }
+          done < <(find Classes Tests Configuration -name '*.php' -type f)
+          exit $status
+
+      # Testy to samodzielne skrypty PHP z własnym assertTrue(), nie PHPUnit.
+      # Rzucają RuntimeException przy niepowodzeniu, więc kod wyjścia != 0 jest wiarygodny.
+      # `find`, nie glob '**' — bash bez globstar nie schodzi rekurencyjnie,
+      # a część testów leży w Tests/Unit/Analysis/ i Tests/Integration/Analysis/.
+      - name: Run test scripts
+        run: |
+          status=0
+          total=0
+          while IFS= read -r f; do
+            total=$((total + 1))
+            echo "== $f"
+            php "$f" < /dev/null || { echo "   ^^ NIE PRZESZEDL"; status=1; }
+          done < <(find Tests -name '*Test.php' -type f | sort)
+          echo "Uruchomiono $total testow."
+          # Bezpiecznik: gdyby refaktor przeniósł/zmienił nazwy testów tak, że find
+          # nic nie znajduje, pusty przebieg nie może udawać sukcesu.
+          if [ "$total" -eq 0 ]; then
+            echo "BLAD: nie znaleziono zadnego testu — sprawdz wzorzec find."
+            exit 1
+          fi
+          exit $status
