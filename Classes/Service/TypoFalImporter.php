@@ -7,6 +7,7 @@ namespace PrimeServices\LazarskiBipUpload\Service;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\Folder;
+use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Resource\ResourceStorage;
@@ -24,13 +25,6 @@ class TypoFalImporter implements FalImporterInterface
     private const EXTENSION_KEY = 'lazarski_bip_upload';
     private const DEFAULT_FOLDER_IDENTIFIER = '/bip-dokumenty/';
 
-    // TYPO3 v12 has TYPO3\CMS\Core\Resource\DuplicationBehavior (old Enumeration class-constant
-    // style, untyped ResourceStorage::addFile() parameter); v13+ replaced it with the unrelated,
-    // hard-typed TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior backed enum. Resolved at
-    // runtime rather than a fixed `use` import so this works across both major versions.
-    private const DUPLICATION_BEHAVIOR_ENUM_CLASS = \TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior::class;
-    private const DUPLICATION_BEHAVIOR_LEGACY_CLASS = \TYPO3\CMS\Core\Resource\DuplicationBehavior::class;
-
     public function __construct(
         private readonly StorageRepository $storageRepository,
         private readonly ResourceFactory $resourceFactory,
@@ -45,10 +39,7 @@ class TypoFalImporter implements FalImporterInterface
             $storage = $this->resolveStorage();
             $folder = $this->resolveFolder($storage, $folderIdentifier);
 
-            $conflictModeClass = class_exists(self::DUPLICATION_BEHAVIOR_ENUM_CLASS)
-                ? self::DUPLICATION_BEHAVIOR_ENUM_CLASS
-                : self::DUPLICATION_BEHAVIOR_LEGACY_CLASS;
-            $file = $storage->addFile($absolutePath, $folder, $targetFileName, $conflictModeClass::RENAME, true);
+            $file = $storage->addFile($absolutePath, $folder, $targetFileName, DuplicationBehavior::RENAME, true);
 
             return (int)$file->getUid();
         } catch (\Throwable $exception) {
