@@ -191,6 +191,12 @@
 			<trans-unit id="review.filePrefixHint" xml:space="preserve">
 				<source>Dodawany na początku nazwy każdego pliku po zatwierdzeniu, np. "uchwala-31-2026_nazwa-pliku.pdf". Domyślnie slug strony z podkreśleniem na końcu. Pozostaw puste, aby nie dodawać przedrostka.</source>
 			</trans-unit>
+			<trans-unit id="review.author" xml:space="preserve">
+				<source>Wytworzył</source>
+			</trans-unit>
+			<trans-unit id="review.authorHint" xml:space="preserve">
+				<source>Widoczne w metryczce na opublikowanej stronie BIP. Domyślnie wartość z konfiguracji rozszerzenia; pozostawienie pustego pola przywraca tę wartość domyślną.</source>
+			</trans-unit>
 			<trans-unit id="review.browsePage" xml:space="preserve">
 				<source>Przeglądaj strony</source>
 			</trans-unit>

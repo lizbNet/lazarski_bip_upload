@@ -11,7 +11,7 @@ return [
         'rootLevel' => -1,
     ],
     'types' => [
-        '1' => ['showitem' => 'staging_token, status, expires_at, confirmed_page, cruser_id, suggested_type, type_confidence, suggested_page_title, suggested_subtitle, suggested_slug, analysis_payload, approved_type, approved_page_title, approved_subtitle, approved_slug, approved_parent_page, approved_fal_folder, suggested_auto_folder, include_auto_folder, approved_file_prefix'],
+        '1' => ['showitem' => 'staging_token, status, expires_at, confirmed_page, cruser_id, suggested_type, type_confidence, suggested_page_title, suggested_subtitle, suggested_slug, analysis_payload, approved_type, approved_page_title, approved_subtitle, approved_slug, approved_parent_page, approved_fal_folder, suggested_auto_folder, include_auto_folder, approved_file_prefix, approved_author'],
     ],
     'columns' => [
         'cruser_id' => [
@@ -199,6 +199,18 @@ return [
             'label' => 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang_db.xlf:tx_lazarskibipupload_domain_model_documentset.approved_file_prefix',
             'config' => [
                 'type' => 'input',
+                'size' => 40,
+                'eval' => 'trim',
+                'searchable' => false,
+            ],
+        ],
+        'approved_author' => [
+            'label' => 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang_db.xlf:tx_lazarskibipupload_domain_model_documentset.approved_author',
+            'config' => [
+                'type' => 'input',
+                // Matches pages.author (varchar(255), max 255) - the field this value is
+                // eventually copied into at publish time.
+                'max' => 255,
                 'size' => 40,
                 'eval' => 'trim',
                 'searchable' => false,

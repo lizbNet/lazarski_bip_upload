@@ -28,6 +28,7 @@ class DocumentSet extends AbstractEntity
     protected string $suggestedAutoFolder = '';
     protected bool $includeAutoFolder = true;
     protected string $approvedFilePrefix = '';
+    protected string $approvedAuthor = '';
 
     public function getStagingToken(): string
     {
@@ -237,5 +238,15 @@ class DocumentSet extends AbstractEntity
     public function setApprovedFilePrefix(string $approvedFilePrefix): void
     {
         $this->approvedFilePrefix = $approvedFilePrefix;
+    }
+
+    public function getApprovedAuthor(): string
+    {
+        return $this->approvedAuthor;
+    }
+
+    public function setApprovedAuthor(string $approvedAuthor): void
+    {
+        $this->approvedAuthor = $approvedAuthor;
     }
 }

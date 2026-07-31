@@ -65,6 +65,9 @@
 			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.approved_file_prefix" xml:space="preserve">
 				<source>Przedrostek nazw plików</source>
 			</trans-unit>
+			<trans-unit id="tx_lazarskibipupload_domain_model_documentset.approved_author" xml:space="preserve">
+				<source>Wytworzył</source>
+			</trans-unit>
 			<trans-unit id="tx_lazarskibipupload_domain_model_documentitem" xml:space="preserve">
 				<source>Plik zestawu dokumentów BIP</source>
 			</trans-unit>

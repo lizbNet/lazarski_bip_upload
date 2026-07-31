@@ -115,6 +115,7 @@ function makeDocumentSet(int $confirmedPage = 0): DocumentSet
     $documentSet->setApprovedSubtitle('Podtytul');
     $documentSet->setApprovedSlug('uchwala-test');
     $documentSet->setApprovedFalFolder('/bip-dokumenty/uchwaly/');
+    $documentSet->setApprovedAuthor('Uczelnia Lazarskiego');
     $documentSet->setConfirmedPage($confirmedPage);
 
     return $documentSet;
@@ -156,6 +157,9 @@ assertTrue($pageCreator->lastPageFields['pid'] === 7, 'Page pid must be the appr
 assertTrue($pageCreator->lastPageFields['title'] === 'Uchwala testowa', 'Page title must be the approved page title');
 assertTrue($pageCreator->lastPageFields['hidden'] === 1, 'The created page must always be hidden');
 assertTrue($pageCreator->lastPageFields['doktype'] === 1, 'The created page must use the standard doktype');
+assertTrue($pageCreator->lastPageFields['author'] === 'Uczelnia Lazarskiego', 'The approved author must be written to the page, since the BIP metryczka renders it');
+assertTrue(($pageCreator->lastPageFields['starttime'] ?? 0) > 0, 'starttime must be set explicitly - the metryczka reads it before falling back to crdate');
+assertTrue(!array_key_exists('lastUpdated', $pageCreator->lastPageFields), 'lastUpdated must be left unset so the metryczka keeps falling back to the auto-updated tstamp');
 assertTrue($item0->getFinalFile() === 100, 'First item must receive its imported file uid');
 assertTrue($item1->getFinalFile() === 101, 'Second item must receive its imported file uid');
 assertTrue($item0->getStatusEnum() === DocumentItemStatus::PUBLISHED, 'Items must be marked PUBLISHED on success');

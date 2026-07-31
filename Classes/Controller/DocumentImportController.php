@@ -21,6 +21,7 @@ use PrimeServices\LazarskiBipUpload\Service\DocumentConversionOrchestrator;
 use PrimeServices\LazarskiBipUpload\Service\DocumentSetAccessGuard;
 use PrimeServices\LazarskiBipUpload\Service\DocumentSetLifecycle;
 use PrimeServices\LazarskiBipUpload\Service\DocumentSetPublisher;
+use PrimeServices\LazarskiBipUpload\Service\PageAuthorProvider;
 use PrimeServices\LazarskiBipUpload\Service\PageBreadcrumbResolver;
 use PrimeServices\LazarskiBipUpload\Service\PageSlugChecker;
 use PrimeServices\LazarskiBipUpload\Service\PublishException;
@@ -59,6 +60,7 @@ class DocumentImportController extends ActionController
         protected readonly DocumentConversionOrchestrator $documentConversionOrchestrator,
         protected readonly DocumentAnalysisService $documentAnalysisService,
         protected readonly DestinationResolver $destinationResolver,
+        protected readonly PageAuthorProvider $pageAuthorProvider,
         protected readonly PageSlugChecker $pageSlugChecker,
         protected readonly PageBreadcrumbResolver $pageBreadcrumbResolver,
         protected readonly PdfMetadataService $pdfMetadataService,
@@ -329,6 +331,14 @@ class DocumentImportController extends ActionController
         // auto-inserted at publish time, so the editor has full control over it.
         $effectiveFilePrefix = $documentSet->getApprovedFilePrefix() !== '' ? $documentSet->getApprovedFilePrefix() : $effectiveSlug . '_';
 
+        // Prefilled from the admin-configured institutional default; unlike the file prefix,
+        // clearing this one does not stick - applyReviewSubmission() falls back to the same
+        // default, because pages.author feeds the public BIP metryczka and must not end up
+        // blank there.
+        $effectiveAuthor = $documentSet->getApprovedAuthor() !== ''
+            ? $documentSet->getApprovedAuthor()
+            : $this->pageAuthorProvider->getDefaultPageAuthor();
+
         // The base folder above stays editable/browsable as-is; the auto-folder checkbox only
         // affects this preview of the FINAL path actually used at publish time (see
         // DocumentSetPublisher), so toggling it never silently rewrites what the editor typed
@@ -364,6 +374,7 @@ class DocumentImportController extends ActionController
             'effectiveFalFolder' => $effectiveFalFolder,
             'finalFalFolderPreview' => $finalFalFolderPreview,
             'effectiveFilePrefix' => $effectiveFilePrefix,
+            'effectiveAuthor' => $effectiveAuthor,
             'destinationBreadcrumb' => $this->pageBreadcrumbResolver->resolve($effectiveParentPage),
             'regenerateFormToken' => $this->getFormProtection()->generateToken(self::FORM_NAME, 'regenerateSuggestions'),
             'removeItemFormToken' => $this->getFormProtection()->generateToken(self::FORM_NAME, 'removeItem'),
@@ -778,6 +789,10 @@ class DocumentImportController extends ActionController
         // Checkboxes only submit a value when checked - presence, not truthiness, is the signal.
         $documentSet->setIncludeAutoFolder(isset($parsedBody['includeAutoFolder']));
         $documentSet->setApprovedFilePrefix(trim((string)($parsedBody['approvedFilePrefix'] ?? '')));
+        // Empty is not a valid published state for this one (see the metryczka in the site
+        // package), so an editor who clears the field gets the configured default back.
+        $submittedAuthor = trim((string)($parsedBody['approvedAuthor'] ?? ''));
+        $documentSet->setApprovedAuthor($submittedAuthor !== '' ? $submittedAuthor : $this->pageAuthorProvider->getDefaultPageAuthor());
 
         $itemTitles = is_array($parsedBody['itemTitles'] ?? null) ? $parsedBody['itemTitles'] : [];
         $itemDescriptions = is_array($parsedBody['itemDescriptions'] ?? null) ? $parsedBody['itemDescriptions'] : [];

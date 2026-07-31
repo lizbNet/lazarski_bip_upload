@@ -75,6 +75,19 @@ class DocumentSetPublisher
                     'slug' => $documentSet->getApprovedSlug(),
                     'hidden' => 1,
                     'doktype' => self::PAGE_DOKTYPE_STANDARD,
+                    // Feeds the metryczka the site package renders on the public page.
+                    'author' => $documentSet->getApprovedAuthor(),
+                    // The "created" date shown there reads starttime first and only falls back
+                    // to crdate, so set it explicitly: crdate is the moment the record was
+                    // written, which drifts from the intended publication date whenever a set
+                    // is confirmed later than it was staged.
+                    //
+                    // lastUpdated is deliberately NOT set. The template falls back to tstamp,
+                    // which DataHandler bumps on every later edit; writing lastUpdated once
+                    // here would freeze "last modified" at the publication date forever, since
+                    // nothing updates that field automatically. Editors can still set it by
+                    // hand in page properties when they want to override the fallback.
+                    'starttime' => $GLOBALS['EXEC_TIME'] ?? time(),
                 ],
                 $importedFileUids
             );

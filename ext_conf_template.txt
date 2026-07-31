@@ -13,6 +13,9 @@ parentPageUidZarzadzenie = 0
 # cat=basic/enable/050; type=int+; label=Parent page UID for "program studiów" document sets (0 = use the default above)
 parentPageUidProgramStudiow = 0
 
+# cat=basic/enable/055; type=string; label=Default page author: Prefills the "author" field on the review form and is used as the fallback if an editor clears it. Shown in the BIP metryczka on the public page, so prefer an institutional name over a person's.
+defaultPageAuthor = Uczelnia Łazarskiego
+
 # cat=basic/enable/060; type=string; label=OpenAI API key (optional): Used to clean up/generate the page title, subtitle, and per-file titles, catching cases (e.g. scanner-generated metadata) the automatic heuristic can't. Leave empty to use the heuristic only - this is never a hard requirement.
 openAiApiKey =
 
