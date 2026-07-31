@@ -339,6 +339,12 @@ class DocumentImportController extends ActionController
             ? $documentSet->getApprovedAuthor()
             : $this->pageAuthorProvider->getDefaultPageAuthor();
 
+        // Left empty on purpose when unset - nothing is guessed from the uploaded files, and an
+        // empty field means "use the publication time" (see DocumentSetPublisher).
+        $effectiveStartDate = $documentSet->getApprovedStartDate() > 0
+            ? date('Y-m-d', $documentSet->getApprovedStartDate())
+            : '';
+
         // The base folder above stays editable/browsable as-is; the auto-folder checkbox only
         // affects this preview of the FINAL path actually used at publish time (see
         // DocumentSetPublisher), so toggling it never silently rewrites what the editor typed
@@ -375,6 +381,9 @@ class DocumentImportController extends ActionController
             'finalFalFolderPreview' => $finalFalFolderPreview,
             'effectiveFilePrefix' => $effectiveFilePrefix,
             'effectiveAuthor' => $effectiveAuthor,
+            'effectiveStartDate' => $effectiveStartDate,
+            // Client-side hint only; ConfirmationValidator is what actually refuses a future date.
+            'maxStartDate' => date('Y-m-d', $GLOBALS['EXEC_TIME'] ?? time()),
             'destinationBreadcrumb' => $this->pageBreadcrumbResolver->resolve($effectiveParentPage),
             'regenerateFormToken' => $this->getFormProtection()->generateToken(self::FORM_NAME, 'regenerateSuggestions'),
             'removeItemFormToken' => $this->getFormProtection()->generateToken(self::FORM_NAME, 'removeItem'),
@@ -703,7 +712,8 @@ class DocumentImportController extends ActionController
                 $documentSet->getApprovedParentPage(),
                 $isDestinationAllowed,
                 $isSlugAvailable,
-                $itemValidationInput
+                $itemValidationInput,
+                $documentSet->getApprovedStartDate() > ($GLOBALS['EXEC_TIME'] ?? time())
             );
 
             if (!$validationResult->isValid) {
@@ -793,6 +803,7 @@ class DocumentImportController extends ActionController
         // package), so an editor who clears the field gets the configured default back.
         $submittedAuthor = trim((string)($parsedBody['approvedAuthor'] ?? ''));
         $documentSet->setApprovedAuthor($submittedAuthor !== '' ? $submittedAuthor : $this->pageAuthorProvider->getDefaultPageAuthor());
+        $documentSet->setApprovedStartDate(self::parseStartDate((string)($parsedBody['approvedStartDate'] ?? '')));
 
         $itemTitles = is_array($parsedBody['itemTitles'] ?? null) ? $parsedBody['itemTitles'] : [];
         $itemDescriptions = is_array($parsedBody['itemDescriptions'] ?? null) ? $parsedBody['itemDescriptions'] : [];
@@ -810,6 +821,31 @@ class DocumentImportController extends ActionController
             }
             $this->documentItemRepository->update($item);
         }
+    }
+
+    /**
+     * Turns the <input type="date"> value ("Y-m-d") into a midnight timestamp, or 0 when the
+     * field was left empty or holds anything unparseable.
+     *
+     * Rejecting junk as 0 ("unset", i.e. fall back to the publication time) rather than letting
+     * it become some arbitrary timestamp matters here: the value ends up in pages.starttime,
+     * where a nonsense date either hides the page or misstates the issue date in the metryczka.
+     * The leading "!" zeroes the time part, so the stored value is local midnight rather than
+     * "midnight plus whatever time of day it happens to be now".
+     */
+    private static function parseStartDate(string $submitted): int
+    {
+        $submitted = trim($submitted);
+        if ($submitted === '') {
+            return 0;
+        }
+
+        $date = \DateTimeImmutable::createFromFormat('!Y-m-d', $submitted);
+        if ($date === false || \DateTimeImmutable::getLastErrors() !== false) {
+            return 0;
+        }
+
+        return $date->getTimestamp();
     }
 
     private function fetchOwnedDocumentSetOrFail(int $documentSetUid): DocumentSet

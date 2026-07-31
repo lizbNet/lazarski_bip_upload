@@ -78,16 +78,22 @@ class DocumentSetPublisher
                     // Feeds the metryczka the site package renders on the public page.
                     'author' => $documentSet->getApprovedAuthor(),
                     // The "created" date shown there reads starttime first and only falls back
-                    // to crdate, so set it explicitly: crdate is the moment the record was
-                    // written, which drifts from the intended publication date whenever a set
-                    // is confirmed later than it was staged.
+                    // to crdate, so set it explicitly. The editor-supplied issue date wins when
+                    // present: for a backlog import, crdate (and the import moment) is when
+                    // somebody got round to uploading the file, not when the document was
+                    // issued, and the metryczka is supposed to show the latter.
+                    //
+                    // Guaranteed to be in the past - ConfirmationValidator refuses a future
+                    // date, because starttime doubles as a frontend visibility gate.
                     //
                     // lastUpdated is deliberately NOT set. The template falls back to tstamp,
                     // which DataHandler bumps on every later edit; writing lastUpdated once
                     // here would freeze "last modified" at the publication date forever, since
                     // nothing updates that field automatically. Editors can still set it by
                     // hand in page properties when they want to override the fallback.
-                    'starttime' => $GLOBALS['EXEC_TIME'] ?? time(),
+                    'starttime' => $documentSet->getApprovedStartDate() > 0
+                        ? $documentSet->getApprovedStartDate()
+                        : ($GLOBALS['EXEC_TIME'] ?? time()),
                 ],
                 $importedFileUids
             );

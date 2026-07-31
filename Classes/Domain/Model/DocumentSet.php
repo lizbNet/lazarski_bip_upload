@@ -29,6 +29,8 @@ class DocumentSet extends AbstractEntity
     protected bool $includeAutoFolder = true;
     protected string $approvedFilePrefix = '';
     protected string $approvedAuthor = '';
+    /** Unix timestamp of the document's issue date; 0 means "unset - use the publication time". */
+    protected int $approvedStartDate = 0;
 
     public function getStagingToken(): string
     {
@@ -248,5 +250,15 @@ class DocumentSet extends AbstractEntity
     public function setApprovedAuthor(string $approvedAuthor): void
     {
         $this->approvedAuthor = $approvedAuthor;
+    }
+
+    public function getApprovedStartDate(): int
+    {
+        return $this->approvedStartDate;
+    }
+
+    public function setApprovedStartDate(int $approvedStartDate): void
+    {
+        $this->approvedStartDate = $approvedStartDate;
     }
 }

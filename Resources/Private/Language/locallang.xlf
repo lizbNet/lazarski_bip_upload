@@ -197,6 +197,12 @@
 			<trans-unit id="review.authorHint" xml:space="preserve">
 				<source>Widoczne w metryczce na opublikowanej stronie BIP. Domyślnie wartość z konfiguracji rozszerzenia; pozostawienie pustego pola przywraca tę wartość domyślną.</source>
 			</trans-unit>
+			<trans-unit id="review.startDate" xml:space="preserve">
+				<source>Data wytworzenia (opcjonalnie)</source>
+			</trans-unit>
+			<trans-unit id="review.startDateHint" xml:space="preserve">
+				<source>Data wydania dokumentu, widoczna w metryczce jako „Utworzono". Pozostaw puste, aby użyć daty publikacji. Nie może być datą przyszłą — strona byłaby wtedy niewidoczna na stronie WWW.</source>
+			</trans-unit>
 			<trans-unit id="review.browsePage" xml:space="preserve">
 				<source>Przeglądaj strony</source>
 			</trans-unit>
@@ -250,6 +256,9 @@
 			</trans-unit>
 			<trans-unit id="confirm.error.set.noItems" xml:space="preserve">
 				<source>Zestaw nie zawiera żadnych plików.</source>
+			</trans-unit>
+			<trans-unit id="confirm.error.set.startDateInFuture" xml:space="preserve">
+				<source>Data wytworzenia nie może być datą przyszłą — opublikowana strona byłaby niewidoczna do jej nadejścia.</source>
 			</trans-unit>
 			<trans-unit id="confirm.error.item.notConverted" xml:space="preserve">
 				<source>Co najmniej jeden plik nie został poprawnie przekonwertowany.</source>

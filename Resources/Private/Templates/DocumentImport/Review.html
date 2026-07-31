@@ -150,6 +150,14 @@
             </small>
         </div>
 
+        <div class="mb-3">
+            <label class="form-label"><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.startDate" /></label>
+            <input type="date" name="approvedStartDate" value="{effectiveStartDate}" max="{maxStartDate}" class="form-control" />
+            <small class="text-muted d-block">
+                <f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.startDateHint" />
+            </small>
+        </div>
+
         <h3><f:translate key="LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang.xlf:review.itemTitlesHeading" /></h3>
         <f:for each="{items}" as="item">
             <div class="panel panel-default mb-3">

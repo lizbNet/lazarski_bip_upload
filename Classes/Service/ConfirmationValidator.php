@@ -21,6 +21,8 @@ final class ConfirmationValidator
 {
     /**
      * @param array<int, array{status: DocumentItemStatus, title: string}> $items
+     * @param bool $isStartDateInFuture resolved by the caller against the current time, keeping
+     *        this method free of any clock dependency like every other condition here
      */
     public static function validate(
         DocumentSetStatus $status,
@@ -30,7 +32,8 @@ final class ConfirmationValidator
         int $approvedParentPageUid,
         bool $isDestinationAllowed,
         bool $isSlugAvailable,
-        array $items
+        array $items,
+        bool $isStartDateInFuture = false
     ): ConfirmationValidationResult {
         $errors = [];
 
@@ -53,6 +56,13 @@ final class ConfirmationValidator
         }
         if ($items === []) {
             $errors[] = 'set.noItems';
+        }
+        // The issue date is copied to pages.starttime at publish time, which is a frontend
+        // visibility gate - a future value would leave the page invisible even after an editor
+        // unhides it, with nothing on screen explaining why. Refused rather than clamped, so
+        // the editor finds out now instead of wondering later why the page 404s.
+        if ($isStartDateInFuture) {
+            $errors[] = 'set.startDateInFuture';
         }
 
         foreach ($items as $item) {

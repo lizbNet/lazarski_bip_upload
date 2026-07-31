@@ -22,6 +22,7 @@ CREATE TABLE tx_lazarskibipupload_domain_model_documentset (
     include_auto_folder tinyint(1) unsigned DEFAULT '1' NOT NULL,
     approved_file_prefix varchar(255) DEFAULT '' NOT NULL,
     approved_author varchar(255) DEFAULT '' NOT NULL,
+    approved_start_date int(11) unsigned DEFAULT '0' NOT NULL,
 
     uid int(11) NOT NULL auto_increment,
     pid int(11) DEFAULT '0' NOT NULL,

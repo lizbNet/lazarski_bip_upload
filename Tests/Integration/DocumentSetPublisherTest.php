@@ -142,6 +142,7 @@ $pageCreator = new FakePageCreator(fn () => 55);
 $publisher = new DocumentSetPublisher($falImporter, $pageCreator, new TemporaryUploadService($stagingRoot));
 
 $documentSet = makeDocumentSet();
+$publishStartedAt = time();
 $pageUid = $publisher->publish($documentSet, [$item0, $item1]);
 
 assertTrue($pageUid === 55, 'Must return the page uid produced by the page creator');
@@ -159,6 +160,7 @@ assertTrue($pageCreator->lastPageFields['hidden'] === 1, 'The created page must 
 assertTrue($pageCreator->lastPageFields['doktype'] === 1, 'The created page must use the standard doktype');
 assertTrue($pageCreator->lastPageFields['author'] === 'Uczelnia Lazarskiego', 'The approved author must be written to the page, since the BIP metryczka renders it');
 assertTrue(($pageCreator->lastPageFields['starttime'] ?? 0) > 0, 'starttime must be set explicitly - the metryczka reads it before falling back to crdate');
+assertTrue(($pageCreator->lastPageFields['starttime'] ?? 0) >= $publishStartedAt, 'With no approved issue date, starttime must fall back to the publication time');
 assertTrue(!array_key_exists('lastUpdated', $pageCreator->lastPageFields), 'lastUpdated must be left unset so the metryczka keeps falling back to the auto-updated tstamp');
 assertTrue($item0->getFinalFile() === 100, 'First item must receive its imported file uid');
 assertTrue($item1->getFinalFile() === 101, 'Second item must receive its imported file uid');
@@ -326,6 +328,27 @@ $documentSet = makeDocumentSet();
 
 $publisher->publish($documentSet, [$item0]);
 assertTrue($falImporter->importCalls[0]['name'] === 'zalacznik.pdf', 'No prefix configured must leave the filename exactly as before (no separator, no empty-prefix artifact)');
+removeDir($stagingRoot);
+
+// --- an approved issue date overrides the publication time as the page's starttime ---
+$stagingRoot = makeStagingDirWithFiles(['file0.pdf']);
+$item0 = new DocumentItem();
+$item0->setOriginalFilename('zalacznik.pdf');
+$item0->setFileExtension('pdf');
+$item0->setConvertedPath(str_repeat('b', 32) . '/file0.pdf');
+$item0->setStatusEnum(DocumentItemStatus::CONVERTED);
+$item0->setApprovedTitle('A');
+
+$falImporter = new FakeFalImporter();
+$pageCreator = new FakePageCreator(fn () => 64);
+$publisher = new DocumentSetPublisher($falImporter, $pageCreator, new TemporaryUploadService($stagingRoot));
+$documentSet = makeDocumentSet();
+// 2026-03-12 00:00:00 UTC - a backlog import of an older document.
+$issuedAt = 1773273600;
+$documentSet->setApprovedStartDate($issuedAt);
+
+$publisher->publish($documentSet, [$item0]);
+assertTrue($pageCreator->lastPageFields['starttime'] === $issuedAt, 'An approved issue date must be used verbatim as starttime, not the publication time');
 removeDir($stagingRoot);
 
 echo sprintf("%d DocumentSetPublisher assertions passed.\n", $assertions);

@@ -141,4 +141,34 @@ assertTrue(
     'Repeated identical error codes across multiple items must be deduplicated to one entry'
 );
 
+// --- a future issue date blocks confirmation (it would hide the published page) ---
+$result = ConfirmationValidator::validate(
+    DocumentSetStatus::STAGED,
+    false,
+    'Title',
+    'slug',
+    7,
+    true,
+    true,
+    validItems(),
+    true
+);
+assertTrue(!$result->isValid, 'A future issue date must not be confirmable');
+assertTrue(in_array('set.startDateInFuture', $result->errors, true), 'Must report the startDateInFuture error code');
+
+// --- a past/today issue date is fine, and the parameter defaults to "not in the future" ---
+$result = ConfirmationValidator::validate(
+    DocumentSetStatus::STAGED,
+    false,
+    'Title',
+    'slug',
+    7,
+    true,
+    true,
+    validItems(),
+    false
+);
+assertTrue($result->isValid, 'A non-future issue date must pass validation');
+assertTrue(!in_array('set.startDateInFuture', $result->errors, true), 'A non-future issue date must not report the error code');
+
 echo sprintf("%d ConfirmationValidator assertions passed.\n", $assertions);
