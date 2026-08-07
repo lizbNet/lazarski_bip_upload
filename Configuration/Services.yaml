@@ -24,7 +24,7 @@ services:
     alias: 'PrimeServices\LazarskiBipUpload\Conversion\SymfonyProcessRunner'
 
   PrimeServices\LazarskiBipUpload\Conversion\DocumentConverterInterface:
-    alias: 'PrimeServices\LazarskiBipUpload\Conversion\LibreOfficeDocumentConverter'
+    alias: 'PrimeServices\LazarskiBipUpload\Conversion\GotenbergDocumentConverter'
 
   PrimeServices\LazarskiBipUpload\Analysis\OpenAiClientInterface:
     alias: 'PrimeServices\LazarskiBipUpload\Analysis\OpenAiHttpClient'

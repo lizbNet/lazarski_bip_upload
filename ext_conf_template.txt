@@ -36,3 +36,12 @@ falFolderIdentifierZarzadzenie =
 
 # cat=basic/enable/120; type=string; label=FAL folder for "program studiów" document sets (empty = use the default above)
 falFolderIdentifierProgramStudiow =
+
+# cat=basic/enable/130; type=string; label=Gotenberg base URL: DOCX/XLSX->PDF conversion backend. Required in any environment without a real `soffice` binary (production home.pl has none - CageFS shared hosting, no root). Leave empty only where LibreOfficeDocumentConverter (DDEV) is wired instead.
+gotenbergBaseUrl =
+
+# cat=basic/enable/140; type=string; label=Gotenberg Basic Auth username (leave empty if the endpoint has no auth)
+gotenbergAuthUser =
+
+# cat=basic/enable/150; type=string; label=Gotenberg Basic Auth password
+gotenbergAuthPassword =
