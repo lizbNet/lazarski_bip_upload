@@ -10,6 +10,7 @@ use PrimeServices\LazarskiBipUpload\Metadata\PdfMetadataService;
 require_once dirname(__DIR__, 2) . '/Classes/Conversion/ProcessResult.php';
 require_once dirname(__DIR__, 2) . '/Classes/Conversion/ProcessRunnerInterface.php';
 require_once dirname(__DIR__, 2) . '/Classes/Metadata/PdfMetadataException.php';
+require_once dirname(__DIR__, 2) . '/Classes/Metadata/PdfMetadataWriterInterface.php';
 require_once dirname(__DIR__, 2) . '/Classes/Metadata/PdfMetadataService.php';
 
 /**

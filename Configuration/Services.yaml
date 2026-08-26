@@ -26,6 +26,9 @@ services:
   PrimeServices\LazarskiBipUpload\Conversion\DocumentConverterInterface:
     alias: 'PrimeServices\LazarskiBipUpload\Conversion\GotenbergDocumentConverter'
 
+  PrimeServices\LazarskiBipUpload\Metadata\PdfMetadataWriterInterface:
+    alias: 'PrimeServices\LazarskiBipUpload\Metadata\GotenbergPdfMetadataService'
+
   PrimeServices\LazarskiBipUpload\Analysis\OpenAiClientInterface:
     alias: 'PrimeServices\LazarskiBipUpload\Analysis\OpenAiHttpClient'
 

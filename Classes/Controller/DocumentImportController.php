@@ -12,7 +12,7 @@ use PrimeServices\LazarskiBipUpload\Domain\Repository\DocumentItemRepository;
 use PrimeServices\LazarskiBipUpload\Domain\Repository\DocumentSetRepository;
 use PrimeServices\LazarskiBipUpload\Exception\UploadValidationException;
 use PrimeServices\LazarskiBipUpload\Metadata\PdfMetadataException;
-use PrimeServices\LazarskiBipUpload\Metadata\PdfMetadataService;
+use PrimeServices\LazarskiBipUpload\Metadata\PdfMetadataWriterInterface;
 use PrimeServices\LazarskiBipUpload\Service\AnalysisResult;
 use PrimeServices\LazarskiBipUpload\Service\ConfirmationValidator;
 use PrimeServices\LazarskiBipUpload\Service\DestinationResolver;
@@ -63,7 +63,7 @@ class DocumentImportController extends ActionController
         protected readonly PageAuthorProvider $pageAuthorProvider,
         protected readonly PageSlugChecker $pageSlugChecker,
         protected readonly PageBreadcrumbResolver $pageBreadcrumbResolver,
-        protected readonly PdfMetadataService $pdfMetadataService,
+        protected readonly PdfMetadataWriterInterface $pdfMetadataService,
         protected readonly DocumentSetPublisher $documentSetPublisher,
         protected readonly PersistenceManagerInterface $persistenceManager,
         protected readonly ModuleTemplateFactory $moduleTemplateFactory,

@@ -16,8 +16,13 @@ use PrimeServices\LazarskiBipUpload\Conversion\ProcessRunnerInterface;
  * Uses exiftool via ProcessRunnerInterface (the same seam Conversion\LibreOfficeDocumentConverter
  * uses), reusing its test-doubling story: tests substitute a fake runner rather than invoking
  * a real binary.
+ *
+ * Stays as the DDEV reference implementation (exiftool is installed there via
+ * .ddev/web-build/Dockerfile) - production is wired to GotenbergPdfMetadataService instead,
+ * since exiftool doesn't exist on the home.pl host. See DocumentConverterInterface/
+ * GotenbergDocumentConverter for the identical pattern this mirrors.
  */
-class PdfMetadataService
+class PdfMetadataService implements PdfMetadataWriterInterface
 {
     public function __construct(
         private readonly ProcessRunnerInterface $processRunner,
