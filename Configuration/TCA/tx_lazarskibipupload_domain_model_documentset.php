@@ -9,6 +9,10 @@ return [
         'delete' => 'deleted',
         'hideTable' => true,
         'rootLevel' => -1,
+        // Records must never block a page's doktype check (DataHandler::doesPageHaveUnallowedTables).
+        'security' => [
+            'ignorePageTypeRestriction' => true,
+        ],
     ],
     'types' => [
         '1' => ['showitem' => 'staging_token, status, expires_at, confirmed_page, cruser_id, suggested_type, type_confidence, suggested_page_title, suggested_subtitle, suggested_slug, analysis_payload, approved_type, approved_page_title, approved_subtitle, approved_slug, approved_parent_page, approved_fal_folder, suggested_auto_folder, include_auto_folder, approved_file_prefix, approved_author, approved_start_date'],

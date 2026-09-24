@@ -8,6 +8,12 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class DocumentItem extends AbstractEntity
 {
+    /**
+     * Always store on pid 0. Left null, Extbase in a backend module falls back to the page selected
+     * in the page tree, and those records then block saving that page's properties.
+     */
+    protected ?int $pid = 0;
+
     protected int $documentSet = 0;
     protected string $originalFilename = '';
     protected string $fileExtension = '';
