@@ -9,6 +9,10 @@ return [
         'delete' => 'deleted',
         'hideTable' => true,
         'rootLevel' => -1,
+        // Records must never block a page's doktype check (DataHandler::doesPageHaveUnallowedTables).
+        'security' => [
+            'ignorePageTypeRestriction' => true,
+        ],
     ],
     'types' => [
         '1' => ['showitem' => 'document_set, original_filename, file_extension, mime_type, size, stored_path, converted_path, status, error_message, suggested_title, title_confidence, title_source, approved_title, approved_description, final_file'],
