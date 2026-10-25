@@ -5,7 +5,7 @@ return [
         'parent' => 'web',
         'position' => [],
         'access' => 'user',
-        'icon' => 'EXT:lazarski_bip_upload/Resources/Public/Icons/Extension.svg',
+        'icon' => 'EXT:lazarski_bip_upload/Resources/Public/Icons/module.svg',
         'path' => '/module/web/lazarski-bip-upload',
         'labels' => [
             'title' => 'LLL:EXT:lazarski_bip_upload/Resources/Private/Language/locallang_mod.xlf:mlang_tabs_tab',
